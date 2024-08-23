@@ -19,43 +19,64 @@ function getComputerChoice(){
 
 // This function gets the player choice
 function getPlayerChoice(){
-    let userChoice = prompt("Make a choice: Rock, Paper or Scissors");
-    if(userChoice === "Rock"){
-        return userChoice;
-    }else if(userChoice === "Paper"){
-        return userChoice;
-    }else if(userChoice === "Scissors"){
-        return userChoice;
-    }else{
-        console.log("Invalid Choice! Try again.")
+    while(true){
+        let userChoice = prompt("Make a choice: Rock, Paper or Scissors");
+        if(options.includes(userChoice)){
+            return userChoice;
+        } else{
+            window.alert("Invalid Choice! Try again.")
+        }
     }
 }
 
 // Game
 function playGame(computerChoice , playerChoice){
-    if(computerChoice == playerChoice){
-        console.log("It's a tie");
-    }else if(computerChoice == "Rock" && playerChoice == "Scissors"){
-        console.log("Computer Wins, Rock beats Scissors");
+    if(computerChoice == "Rock" && playerChoice == "Scissors"){
+        window.alert("Computer gets a point, Rock beats Scissors");
+        computerScore++;
     }else if(computerChoice == "Scissors" && playerChoice == "Paper"){
-        console.log("Computer Wins!, Scissors beats Paper");
+        window.alert("Computer gets a point!, Scissors beats Paper");
+        computerScore++;
     }else if(computerChoice == "Paper" && playerChoice == "Rock"){
-        console.log("Computer Wins, Paper beats Rock");
+        window.alert("Computer gets a point, Paper beats Rock");
+        computerScore++;
     }else if(playerChoice == "Rock" && computerChoice == "Scissors"){
-        console.log("Player Wins, Rock beats Scissors");
+        window.alert("Player gets a point, Rock beats Scissors");
+        playerScore++;
     }else if(playerChoice == "Scissors" && computerChoice == "Paper"){
-        console.log("Player Wins!, Scissors beats Paper");
+        window.alert("Player gets a point!, Scissors beats Paper");
+        playerScore++;
     }else if(playerChoice == "Paper" && computerChoice == "Rock"){
-        console.log("Computer Wins, Paper beats Rock");
+        window.alert("Player gets a point, Paper beats Rock");
     }else{
-        console.log("Computer chose " + computerChoice +", You chose " + playerChoice);
+        window.alert("It's a tie, Computer chose " + computerChoice +", You chose " + playerChoice);
     }
 }
 
-const computerChoice = getComputerChoice();
-const playerChoice = getPlayerChoice();
+function playRound(){
+    // used a while loop to check the score
+    while (playerScore < 3 && computerScore < 3) {
+        const computerChoice = getComputerChoice();
+        const playerChoice = getPlayerChoice();
+        playGame(computerChoice,playerChoice);
+        window.alert("PlayerScore " + playerScore + " : " + "ComputerScore " + computerScore)
+        if(playerScore === 3){
+            window.alert("Player Wins");
+        } else if(computerScore === 3){
+            window.alert("Computer Wins");
+        }
+    }
+}
 
-playGame(computerChoice,playerChoice);
+
+// const computerChoice = getComputerChoice();
+// const playerChoice = getPlayerChoice();
+
+// playGame(computerChoice,playerChoice);
+window.alert("It's case sensitive, so please use Rock, Paper or Scissors. Thank you")
+playRound();
+
+
 // console.log(computerChoice);
 // console.log(playerChoice);
 
