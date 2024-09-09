@@ -16,21 +16,6 @@ function getComputerChoice() {
     return random;
 }
 
-// // This function gets the player choice and makes it case-insensitive
-// function getPlayerChoice() {
-//     while (true) {
-//         let userChoice = prompt("Make a choice: Rock, Paper, or Scissors").toLowerCase(); // Convert to lowercase
-//         if (options.includes(userChoice)) {
-//             return userChoice;
-//         } else {
-//             window.alert("Invalid Choice! Try again.");
-//         }
-//     }
-// }
-
-// Game
-
-
 function playGame(playerChoice) {
     const computerChoice = getComputerChoice();
 
@@ -70,10 +55,10 @@ function updateScore(){
 
     if(playerScore === 5){
         updateResult(`Player Wins the Game`);
-        resetGame();
+        document.getElementById("resetBtn").style.display = "block";
     } else if(computerScore === 5){
         updateResult(`Computer Wins the Game`);
-        resetGame();
+        document.getElementById("resetBtn").style.display = "block";
     }
 
 }
@@ -83,6 +68,8 @@ function resetGame(){
     playerScore = 0;
     computerScore = 0;
     updateScore();
+    updateResult("Make your choice");
+    document.getElementById("resetBtn").style.display = "none";
 }
 
 // Function to update the message results
@@ -91,53 +78,88 @@ function updateResult(message){
     resultDiv.textContent = message;
 }
 
+// Adding Ui, using Javascript DOM manipulations
+window.onload = function(){
+    // Creating button containers using flexbox
+    const container = document.createElement("div");
+    container.id = "container";
+    container.style.display = "flex";
+    container.style.justifyContent = "center";
+    container.style.gap = "20px";
+    container.style.marginTop = "20px";
+    document.body.appendChild(container);
 
+    // Creating the RPS buttons with images
+    const rockButton = document.createElement("button");
+    const rockImage = document.createElement("img");
+    rockImage.src = "./Images/rock.png";
+    rockImage.style.height = "50px";
+    rockImage.style.width = "50px";
+    rockButton.appendChild(rockImage);
+    container.appendChild(rockButton);
 
-// Adding Ui, using DOM manipulations
-// Addign the container for the buttons
-const container = document.querySelector("body");
-const div_one = document.createElement("div");
-div_one.id = "container";
-// div_one.style.border = "4px solid black";
-// Creating and Adding the rock button to the container
-const rock_button = document.createElement("button");
-rock_button.textContent = "Rock";
-// 
-const paper_button = document.createElement("button");
-paper_button.textContent = "Paper";
-// 
-const scissors_button = document.createElement("button");
-scissors_button.textContent = "Scissors";
+    const paperButton = document.createElement("button");
+    const paperImage = document.createElement("img");
+    paperImage.src = "./Images/paper.png";
+    paperImage.style.height = "50px";
+    paperImage.style.width = "50px";
+    paperButton.appendChild(paperImage);
+    container.appendChild(paperButton);
 
-// Adding event Listeners to the buttons
-rock_button.addEventListener("click", () => playGame("rock"));
-paper_button.addEventListener("click", () => playGame("paper"));
-scissors_button.addEventListener("click", () => playGame("scissors"));
+    const scissorsButton = document.createElement("button");
+    const scissorsImage = document.createElement("img");
+    scissorsImage.src = "./Images/scissors.png";
+    scissorsImage.style.height = "50px";
+    scissorsImage.style.width = "50px";
+    scissorsButton.appendChild(scissorsImage);
+    container.appendChild(scissorsButton);
 
-// Adding the score and result display
-const playerScoreDiv = document.createElement("div");
-playerScoreDiv.id = "playerScore";
-playerScoreDiv.textContent = "Player Score : 0";
+    // Adding event Listeners to the buttons
+    rockButton.addEventListener("click", () => playGame("rock"));
+    paperButton.addEventListener("click", () => playGame("paper"));
+    scissorsButton.addEventListener("click", () => playGame("scissors"))
 
-const computerScoreDiv = document.createElement("div");
-computerScoreDiv.id = "computerScore";
-computerScoreDiv.textContent = "Computer Score : 0";
+    // Creating Scores and Result Display
+    const scoreContainer = document.createElement("div");
+    scoreContainer.style.textAlign = "center";
+    scoreContainer.style.marginTop = "20px";
+    document.body.appendChild(scoreContainer);
 
-const resultDiv = document.createElement("div");
-resultDiv.id = "result";
-resultDiv.textContent = "Make your choice";
+    const playerScoreDiv = document.createElement("div");
+    playerScoreDiv.id = "playerScore";
+    playerScoreDiv.textContent = "Player Score: 0";
+    document.body.appendChild(playerScoreDiv);
 
+    const computerScoreDiv = document.createElement("div");
+    computerScoreDiv.id = "computerScore";
+    computerScoreDiv.textContent = "Computer Score: 0";
+    document.body.appendChild(computerScoreDiv);
 
+    const resultDiv = document.createElement("div");
+    resultDiv.id = "result";
+    resultDiv.textContent = "Make your choice";
+    resultDiv.style.fontSize = "20px";
+    resultDiv.style.marginTop = "10px";
+    scoreContainer.appendChild(resultDiv);
 
+    // Creating a reset button that shows up when the game is won
+    const resetBtn = document.createElement("button");
+    resetBtn.id = "resetBtn";
+    resetBtn.textContent = "Reset Game";
+    resetBtn.style.marginTop = "20px";
+    resetBtn.style.padding = "10px";
+    resetBtn.style.backgroundColor = "grey";
+    resetBtn.style.color = "white";
+    resetBtn.style.border = "none";
+    resetBtn.style.borderRadius = "5px";
+    resetBtn.style.cursor = "pointer";
+    resetBtn.style.display = "none";
+    document.body.appendChild(resetBtn);
 
-// Append buttons to the container
-div_one.appendChild(rock_button);
-div_one.appendChild(paper_button);
-div_one.appendChild(scissors_button);
+    // Event listener for the reset button
+    resetBtn.addEventListener("click", () => resetGame())
 
-// Adding the containers to the body
-container.appendChild(div_one);
-container.appendChild(playerScoreDiv);
-container.appendChild(computerScoreDiv);
-container.appendChild(resultDiv);
+}
+
+;
 
