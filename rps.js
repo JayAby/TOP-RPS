@@ -9,6 +9,7 @@
 const options = ["rock", "paper", "scissors"];
 let computerScore = 0;
 let playerScore = 0;
+let gameOver = false;
 
 // This function generates a random choice for the computer
 function getComputerChoice() {
@@ -17,6 +18,8 @@ function getComputerChoice() {
 }
 
 function playGame(playerChoice) {
+    if (gameOver) return;
+
     const computerChoice = getComputerChoice();
 
     if (computerChoice === "rock" && playerChoice === "scissors") {
@@ -55,11 +58,14 @@ function updateScore(){
 
     if(playerScore === 5){
         updateResult(`Player Wins the Game`);
+        gameOver = true;
         document.getElementById("resetBtn").style.display = "block";
+        disableButtons(true);
     } else if(computerScore === 5){
         updateResult(`Computer Wins the Game`);
+        gameOver = true;
         document.getElementById("resetBtn").style.display = "block";
-    }
+        disableButtons(true);    }
 
 }
 
@@ -67,9 +73,18 @@ function updateScore(){
 function resetGame(){
     playerScore = 0;
     computerScore = 0;
+    gameOver = false;
     updateScore();
     updateResult("Make your choice");
     document.getElementById("resetBtn").style.display = "none";
+    disableButtons(false);
+}
+
+// Function to disable buttons
+function disableButtons(disable){
+    document.getElementById("rockButton").disabled = disable;
+    document.getElementById("paperButton").disabled = disable;
+    document.getElementById("scissorsButton").disabled = disable;
 }
 
 // Function to update the message results
